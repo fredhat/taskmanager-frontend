@@ -1,0 +1,28 @@
+<mat-card>
+	<mat-card-title>These are your current tasks:</mat-card-title>
+	<mat-card-subtitle>
+		<mat-radio-group [(ngModel)]="radioButton">
+			FILTER BY: 
+			<mat-radio-button *ngFor="let radioButton of radioButtons" [value]="radioButton" (click)="fetchData()">
+				{{radioButton}}
+			</mat-radio-button>
+		</mat-radio-group>
+	</mat-card-subtitle>
+	<mat-card-content>
+		<mat-list>
+			<mat-card *ngFor="let task of filteredTasks" >
+				<div class="card-container">
+					<mat-card-title-group>
+						<mat-card-title>{{task.name}}</mat-card-title>
+						<mat-card-subtitle>{{task.description}}</mat-card-subtitle>
+					</mat-card-title-group>
+					<div class="button-container">
+						<button mat-raised-button [disabled]="task.isCompleted"(click)="complete(task.id)">Complete</button>
+						<button mat-raised-button [disabled]="task.isDeleted" (click)="remove(task.id)">Delete</button>
+					</div>
+				</div>
+				<mat-card-footer>Deadline: {{task.deadline| date : 'MM-dd-yyyy'}}, Status: {{task.status}}</mat-card-footer>
+			</mat-card>
+		</mat-list>
+	</mat-card-content>
+</mat-card>
